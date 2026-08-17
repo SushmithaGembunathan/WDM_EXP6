@@ -1,5 +1,7 @@
 ### EX6 Information Retrieval Using Vector Space Model in Python
-### DATE: 
+### DATE: 17-8-26
+### Name : Sushmitha Gembunathan
+### Regis no : 21222404042
 ### AIM: To implement Information Retrieval Using Vector Space Model in Python.
 ### Description: 
 <div align = "justify">
@@ -24,7 +26,7 @@ sklearn to demonstrate Information Retrieval using the Vector Space Model.
     from nltk.corpus import stopwords
     import string
     import nltk
-
+    nltk.download('punkt_tab')
     nltk.download('punkt')
     nltk.download('stopwords')
 
@@ -51,7 +53,36 @@ sklearn to demonstrate Information Retrieval using the Vector Space Model.
 
 ###### Calculate cosine similarity between query and documents
     def search(query, tfidf_matrix, tfidf_vectorizer):
-        //TYPE YOUR CODE HERE
+        
+    # Preprocess query
+    preprocessed_query = preprocess_text(query)
+
+    # Convert query into TF-IDF vector
+    query_vector = tfidf_vectorizer.transform([preprocessed_query])
+
+    # Calculate cosine similarity
+    similarity_scores = cosine_similarity(
+        query_vector,
+        tfidf_matrix
+    )
+
+    # Sort documents based on similarity scores
+    sorted_indexes = similarity_scores.argsort()[0][::-1]
+
+    # Get document IDs
+    doc_keys = list(documents.keys())
+
+    # Return document ID, document and similarity score
+    results = [
+        (
+            doc_keys[i],
+            documents[doc_keys[i]],
+            similarity_scores[0, i]
+        )
+        for i in sorted_indexes
+    ]
+
+    return results
 
 ###### Get input from user
     query = input("Enter your query: ")
@@ -73,5 +104,8 @@ sklearn to demonstrate Information Retrieval using the Vector Space Model.
     print("The highest rank cosine score is:", highest_rank_score)
 
 ### Output:
+<img width="625" height="597" alt="image" src="https://github.com/user-attachments/assets/6c2b873c-ade5-4dc8-a28f-cf07a490700f" />
+
 
 ### Result:
+Thus information retrieval using vector space model in python is successfully executed.
